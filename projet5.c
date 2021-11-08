@@ -7,7 +7,7 @@ int neg(int nb[] , int taille){ // renvoie 1 si le nombre est négatif et 0 si l
     for ( i =  0 ; i < taille ; i++){
         if (nb[i] < 0){
             return 1;
-            //printf("muddolini");
+            
         }
     }
     return 0;
@@ -190,21 +190,66 @@ void addition(int res[], int nb1[], int nb2[], int taille){
     }
 }
 
+int chiffre(int tab[], int tailletab){
+    int i;
+    for(i=0; i<tailletab && tab[i]==0; i++);
+    return tailletab-i;
+}
 
-/*void multiply(int res[], int nb1[], int nb2[], int taille){
+
+
+void decaler(int nb[1000], int decal){
+    int i;
+    int nc = chiffre(nb, 1000);
+    for (i=0; i<=nc; i++){
+        nb[1000-nc-decal+i]=nb[1000-nc+i];
+    }
+    for (i=0; i<decal; i++){
+        nb[1000-i-1]=0;
+    }
+}
+void multiply(int resf[], int nb1[], int nb2[], int taille){
     int i;
     int j;
-    int cur = 0;
-
-    for (i = 0 ; i < taille; i++){
-        int C[1000] = {0};  
-            printf(" ");
-    for (j = 1; j<taille ; j++){
-
+    int nc = chiffre(nb2, taille);
+    for (i=0; i<nc; i++){
+        int rest[1000] = {0};
+        for (j=1; j<=nb2[taille-i-1]; j++){
+            addition(rest, rest, nb1, 1000);
         }
+        decaler(rest, i);
+        addition(resf, resf, rest, 1000);
+    }
+}
+
+void multiplication(int res[], int nb1[], int nb2[], int taille){
+
+    int neg1 = neg(nb1,1000);
+    int neg2 = neg(nb2,1000);
+
+    if (neg1 == 0 && neg2 == 0){
+        multiply(res,nb1,nb2,1000);
+    }
+    else if (neg1 == 0 && neg2 == 1){
+        converte(nb2, 1000);
+        multiply(res,nb1,nb2,1000);
+        converte(res,1000);
+    }
+    else if (neg1 == 1 && neg2 == 1){
+        converte(nb2, 1000); converte(nb1, 1000);
+        multiply(res,nb1,nb2,1000);
+    }
+    else if (neg1 == 1 && neg2 == 0){
+        converte(nb1, 1000);
+        multiply(res,nb1,nb2,1000);
+        converte(res,1000);
     }
 
-}*/
+}
+
+
+   
+
 int main(){
     int nb1[1000]={0};
     int nb2[1000]={0};
@@ -243,17 +288,51 @@ int main(){
         display(res1, 1000);
     }
    else if (op1 == '-' && op2 == '-'){
-       soustraction(res1,nb1,nb2,1000);
-       soustraction(res2,res1,nb3,1000);
-       display(res2,1000);
+        soustraction(res1,nb1,nb2,1000);
+        soustraction(res2,res1,nb3,1000);
+        display(res2,1000);
     }
-    else if (op1 == '-' && op2 == '+'){
-       soustraction(res1,nb1,nb2,1000);
-       addition(res2,res1,nb3,1000);
-       display(res2,1000);
+   else if (op1 == '-' && op2 == '+'){
+        soustraction(res1,nb1,nb2,1000);
+        addition(res2,res1,nb3,1000);
+        display(res2,1000);
     }
-}
 
+   else if ( op1 == '*' && op2 == '*'){
+        multiplication(res1, nb1, nb2, 1000);
+        multiplication(res2, res1, nb3, 1000);
+        display(res2,1000);
+    }
+    else if ( op1 == '*' && op2 == '\n'){
+        multiplication(res1, nb1, nb2, 1000);
+        display(res1,1000);
+    }
+   else if ( op1 == '*' && op2 == '+'){
+        multiplication(res1, nb1, nb2, 1000);
+        addition(res2, res1, nb3, 1000);
+        display(res2,1000);
+    }
+   else if ( op1 == '*' && op2 == '-'){
+        multiplication(res1, nb1, nb2, 1000);
+        soustraction (res2, res1, nb3, 1000);
+        display(res2,1000);
+    }
+   else if ( op1 == '+' && op2 == '*'){
+        multiplication(res1, nb2, nb3, 1000);
+        addition(res2,nb1, res1, 1000);
+        display(res2,1000);
+    }
+   else if ( op1 == '-' && op2 == '*'){
+        multiplication(res1, nb2, nb3, 1000);
+        soustraction (res2, nb1, res1, 1000);
+        display(res2,1000);
+    }
+
+
+
+
+
+}
 
 
 
