@@ -638,6 +638,14 @@ int main(){
         poubelle(res2, 1000);
         display(res2, 1000);
     }
+
+    else if (op1 == '+' && op2 == '/'){
+        division(res1, nb2, nb3, 1000);
+        addition(res2, nb1, res1, 1000);
+        poubelle(res2, 1000);
+        display(res2, 1000);
+    }
+
     else if ( op1 == '/' && op2 == '%')
     {
         division(res1, nb1, nb2, 1000);
@@ -652,6 +660,13 @@ int main(){
         poubelle(res2, 1000);
         display(res2, 1000);
     }
+    else if (op1 == '+' && op2 == '%'){
+        modulo(res1, nb2, nb3, 1000);
+        addition(res2, nb1, res1, 1000);
+        poubelle(res2, 1000);
+        display(res2, 1000);
+    }
+    
     else if ( op1 == '%' && op2 == '*')
     {
         modulo(res1, nb1, nb2, 1000);
